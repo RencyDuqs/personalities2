@@ -1,125 +1,74 @@
-import { useState } from 'react';
-import { sculptureList } from './data';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
+import { useEffect, useState } from 'react';
+import './App.css';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Typography from '@mui/material/Typography';
 
 export default function Gallery() {
+  const [players, setPlayers] = useState([]);
   const [index, setIndex] = useState(0);
   const [showMore, setShowMore] = useState(false);
-  const hasNext = index < sculptureList.length - 1;
-  const hasPrevious = index > 0;
+
+  useEffect(() => {
+    fetch('http://localhost:8080/duque/personalities') // Changed URL to your /duque endpoint
+      .then(res => res.json())
+      .then(data => setPlayers(data))
+      .catch(err => console.error('Failed to fetch:', err));
+  }, []);
+
+  const hasNext = index < players.length - 1;
 
   function handleNextClick() {
-    if (hasNext) {
-      setIndex(index + 1);
-    } else {
-      setIndex(0);
-    }
+    setIndex((prevIndex) => (hasNext ? prevIndex + 1 : 0));
   }
 
   function handleBackClick() {
-    if (hasPrevious) {
-      setIndex(index - 1);
-    } else {
-      setIndex(sculptureList.length - 1);  
-    }
+    setIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : players.length - 1));
   }
 
   function handleMoreClick() {
     setShowMore(!showMore);
   }
 
-  let sculpture = sculptureList[index];
+  if (players.length === 0) return <div>No Data</div>;
+
+  let player = players[index];
 
   return (
-    <Container maxWidth="sm" sx={{ margin: '0 auto' }}>
-      <Box 
-        component="section" 
-        sx={{ 
-          p: 2, 
-          border: '1px dashed grey', 
-          position: 'relative', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          alignItems: 'center',
-          justifyContent: 'center', 
-          textAlign: 'center', 
-          maxWidth: '1000px',
-          width: '100%',
-        }}
-      >
-        <Typography variant="h4" gutterBottom>
-          {sculpture.artist}
-        </Typography>  
+    <div className="container">
+      <Card className="card">
+        <CardContent>
+          <Typography variant="h4">BADMINTON PLAYERS</Typography> {/* Changed title */}
+          <Typography variant="h5">Rency Dayne M. Duque - C-PEITEL3</Typography> {/* Kept your name */}
+        </CardContent>
 
-        <Typography variant="body1" color="textSecondary" sx={{ mb: 2 }}>
-          {sculpture.name}
-        </Typography>
+        <CardContent className="buttons">
+          <Button variant="contained" onClick={handleBackClick}>BACK</Button>
+          <Button variant="contained" onClick={handleNextClick}>NEXT</Button>
+        </CardContent>
 
-        <Stack
-          spacing={2}
-          direction="row"
-          sx={{
-            marginBottom: 4, 
-            marginTop: 2,    
-            justifyContent: 'center', 
-          }}
-        >
-          <Button variant="contained" onClick={handleBackClick} sx={{ padding: '12px 24px' }}>
-            Back
+        <CardMedia component="img" alt={player.name} height="250" image={player.image} /> {/* Changed alt and image source */}
+
+        <CardContent className="details-section">
+          <Typography variant="h4">{player.name}</Typography> {/* Changed to player.name */}
+          <Typography variant="h6">{index + 1} of {players.length}</Typography>
+        </CardContent>
+
+        <CardActions className="details-toggle">
+          <Button size="small" onClick={handleMoreClick}>
+            {showMore ? '▲' : '▼'}
           </Button>
-          <Button variant="contained" onClick={handleNextClick} sx={{ padding: '12px 24px' }}>
-            Next
-          </Button>
-        </Stack>
-
-        <Box sx={{ position: 'relative' }}>
-          <img
-            src={sculpture.url}
-            alt={sculpture.alt}
-            style={{
-              width: '90%',  
-              maxWidth: '550px',  
-              height: 'auto',
-              borderRadius: '8px',
-              objectFit: 'cover',
-              marginBottom: 16,  
-              marginLeft: 'auto',
-              marginRight: 'auto',
-            }}
-          />
-        </Box>
-
-        <Typography variant="h5" component="h2" sx={{ fontStyle: 'italic', mb: 1 }}>
-          {sculpture.name}
-        </Typography>
-
-        <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
-          ({index + 1} of {sculptureList.length})
-        </Typography>
-
-        <IconButton 
-          onClick={handleMoreClick} 
-          sx={{
-            marginLeft: 'auto', 
-            marginRight: 'auto', 
-          }}
-        >
-          {showMore ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-        </IconButton>
+        </CardActions>
 
         {showMore && (
-          <Typography variant="body1" sx={{ mt: 1 }}>
-            {sculpture.description}
-          </Typography>
+          <CardContent className="description-section">
+            <Typography variant="body1">{player.description}</Typography>
+          </CardContent>
         )}
-      </Box>
-    </Container>
+      </Card>
+    </div>
   );
 }
