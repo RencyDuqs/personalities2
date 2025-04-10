@@ -15,17 +15,17 @@ body {
 header,
 section {
   width: 100%;
-  max-width: 1000px;
-  margin: 2rem auto;
-  padding: 2rem;
+  max-width: 900px; /* Reduced max-width */
+  margin: 1.5rem auto; /* Reduced margin */
+  padding: 1.5rem; /* Reduced padding */
   background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
+  border-radius: 8px; /* Slightly smaller border radius */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Softer shadow */
 }
 
 header {
   max-width: 1280px;
-  padding: 2rem;
+  padding: 1.5rem; /* Reduced padding */
   text-align: center;
 }
 
@@ -34,18 +34,18 @@ section {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1.5rem; 
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #333;
-  margin-top: 2rem;
+  margin-top: 1.5rem; 
   font-weight: bold;
 }
 
 h2 {
-  font-size: 1.8rem;
+  font-size: 1.5rem; 
   color: #333;
   font-style: italic;
   margin-top: 1rem;
@@ -53,7 +53,7 @@ h2 {
 }
 
 h3 {
-  font-size: 1rem;
+  font-size: 0.9rem; 
   color: #777;
 }
 
@@ -61,10 +61,10 @@ button {
   background-color: #646cff;
   color: white;
   border: none;
-  border-radius: 8px;
-  padding: 12px 24px;
-  margin: 1rem 0;
-  font-size: 1rem;
+  border-radius: 6px; 
+  padding: 10px 20px; 
+  margin: 0.8rem 0;
+  font-size: 0.9rem; 
   cursor: pointer;
   transition: background-color 200ms, transform 200ms ease-in-out;
 }
@@ -80,7 +80,7 @@ button:focus {
 
 button + button {
   background-color: #ffcc00;
-  margin-top: 1rem;
+  margin-top: 0.8rem; 
 }
 
 button + button:hover {
@@ -88,40 +88,40 @@ button + button:hover {
 }
 
 img {
-  max-width: 100%;
+  max-width: 90%;
   height: auto;
   display: block;
   margin: 1rem auto;
-  border-radius: 10px;
+  border-radius: 8px; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 p {
-  font-size: 1rem;
+  font-size: 0.95rem; 
   color: #555;
-  max-width: 800px;
+  max-width: 750px; 
   margin: 1rem auto;
-  line-height: 1.6;
+  line-height: 1.5; 
   text-align: center;
-  padding: 0 20px;
+  padding: 0 15px;
 }
 
 @media (max-width: 768px) {
   h2 {
-    font-size: 1.5rem;
+    font-size: 1.3rem; 
   }
 
   button {
     width: 100%;
-    padding: 10px 20px;
+    padding: 8px 16px; 
   }
 
   p {
-    padding: 0 15px;
-    font-size: 0.95rem;
+    padding: 0 12px; 
+    font-size: 0.85rem; 
   }
 
   section {
-    padding: 1.5rem;
+    padding: 1rem;
   }
 }
